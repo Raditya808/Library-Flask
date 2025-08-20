@@ -81,6 +81,8 @@ if file.filename == '' → validasi apakah user memilih file.
 
 file.save(os.path.join(UPLOAD_FOLDER, filename)) → menyimpan file dengan nama asli (yang sudah diamankan).
 ===========================================================================================================
+
+
 ``` bash
 pip install flask
 ```
@@ -93,4 +95,5 @@ python upload_secure.py    # kode kedua
 ``` bash
 http://127.0.0.1:5000/upload
 ```
+
 
