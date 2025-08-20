@@ -1,39 +1,34 @@
-# 📂 Flask File Upload (Versi Aman)
+# 📂 Flask File Upload — Dua Versi Implementasi
 
-Contoh implementasi **upload file di Flask** dengan validasi dan penanganan nama file yang lebih aman menggunakan `secure_filename` dari **Werkzeug**.
+Repository ini berisi **dua contoh implementasi upload file dengan Flask**.  
+Tujuannya untuk memahami dasar cara kerja `request.files` hingga versi yang lebih aman menggunakan `secure_filename`.
 
 ---
 
-## 🚀 Kode Lengkap
+## 🔹 Kode Pertama (Versi Dasar)
 
 ```python
-import os
 from flask import Flask, request 
-from werkzeug.utils import secure_filename
+import os
 
-app = Flask(__name__)
+app = Flask(__name__)           
 
-UPLOAD_FOLDER = 'uploads'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload', methods=['GET', 'POST'])     
 def upload_file():
     if request.method == 'POST':
-        if 'the_file' not in request.files:
-            return 'no file apart'
-        
-        file = request.files['the_file']
-        if file.filename == '':
-            return 'no file selected'
+        print(request.files)
+        print(request.files['the_file'].filename)
+        os.makedirs('uploads', exist_ok=True)  
 
-        filename = secure_filename(file.filename) 
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
-        return f'file upload sukses: {filename}'
-        
+        f = request.files['the_file']
+        f.save('uploads/uploaded_file.txt')
+
+        return 'file uploaded successfully'
+
     return '''
     <form method="POST" enctype="multipart/form-data"><br>
     <input type="file" name="the_file"><br>
-    <input type="submit" value="uploads"><br>
+    <input type="submit" value="upload"><br>
     </form>
     '''
 
