@@ -46,6 +46,8 @@ if __name__ == '__main__':
 ===========================================================================================================
 
 🔹 Kode Kedua (Versi Lebih Aman)
+
+
 import os
 from flask import Flask, request 
 from werkzeug.utils import secure_filename
@@ -89,6 +91,7 @@ if file.filename == '' → validasi apakah user memilih file.
 
 file.save(os.path.join(UPLOAD_FOLDER, filename)) → menyimpan file dengan nama asli (yang sudah diamankan).
 ===========================================================================================================
+
 
 
 
