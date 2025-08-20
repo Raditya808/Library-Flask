@@ -1,3 +1,4 @@
+🔹 Kode Kedua (Lebih Aman)
 import os
 from flask import Flask, request 
 from werkzeug.utils import secure_filename
@@ -30,3 +31,22 @@ def upload_file():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+🛠 Fungsi yang digunakan:
+
+secure_filename(file.filename) → membersihkan nama file agar aman dari karakter/path berbahaya.
+
+if 'the_file' not in request.files → validasi apakah field the_file ada di form.
+
+if file.filename == '' → validasi apakah user memilih file atau tidak.
+
+file.save(os.path.join(UPLOAD_FOLDER, filename)) → menyimpan file sesuai nama asli yang sudah diamankan.
+
+📌 Kelebihan: lebih aman, file disimpan sesuai nama asli user.
+📌 Kekurangan: sedikit lebih panjang dibanding versi pertama.
+
+⚖️ Perbandingan
+Aspek	Kode Pertama	Kode Kedua
+Simplicity	✅ Sangat sederhana	❌ Lebih panjang
+Keamanan Nama	❌ Tidak aman (selalu overwrite)	✅ Aman (secure_filename)
+Cocok untuk	Belajar dasar	Aplikasi nyata
