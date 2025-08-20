@@ -1,3 +1,11 @@
+``` bash
+pip install flask
+```
+``` bash
+http://127.0.0.0.1
+```
+
+
 # 📂 Flask File Upload — Dua Versi Implementasi
 
 Repository ini berisi **dua contoh implementasi upload file dengan Flask**.  
@@ -84,17 +92,6 @@ file.save(os.path.join(UPLOAD_FOLDER, filename)) → menyimpan file dengan nama 
 
 
 
-detail file
-
-``` bash
-python upload_basic.py     # kode pertama
-python upload_secure.py    # kode kedua
-```
-
-``` bash
-pip install flask
-http://127.0.0.1:5000/upload
-```
 
 
 
