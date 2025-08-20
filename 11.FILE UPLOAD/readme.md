@@ -39,3 +39,11 @@ def upload_file():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+``` bash
+pip install flask
+```
+``` bash
+127.0.0.0.1
+```
+
