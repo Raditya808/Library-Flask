@@ -3,6 +3,12 @@
 Repository ini berisi **dua contoh implementasi upload file dengan Flask**.  
 Tujuannya untuk memahami dasar cara kerja `request.files` hingga versi yang lebih aman menggunakan `secure_filename`.
 
+``` bash
+pip install flask
+```
+``` bash
+127.0.0.0.1
+```
 ---
 
 ## 🔹 Kode Pertama (Versi Dasar)
