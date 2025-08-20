@@ -1,11 +1,11 @@
-# 📂 Flask File Upload — Penjelasan Fungsi
+# 📂 Flask File Upload — Dua Versi Implementasi
 
-Repository ini berisi **2 versi kode upload file di Flask**.  
-Masing-masing kode punya fungsi dan perbedaan tersendiri.  
+Repository ini berisi **dua contoh implementasi upload file dengan Flask**.  
+Tujuannya untuk memahami dasar cara kerja `request.files` hingga versi yang lebih aman menggunakan `secure_filename`.
 
 ---
 
-## 🔹 Kode Pertama (Dasar)
+## 🔹 Kode Pertama (Versi Dasar)
 
 ```python
 from flask import Flask, request 
@@ -35,66 +35,59 @@ def upload_file():
 if __name__ == '__main__':
     app.run(debug=True)
 
-🛠 Fungsi yang digunakan:
+===========================================================================================================
 
-Flask(__name__) → membuat instance aplikasi Flask.
-
-@app.route('/upload', methods=['GET','POST']) → mendefinisikan endpoint /upload yang bisa menerima GET (form) & POST (upload).
-
-request.files → menampung file yang diupload user.
-
-os.makedirs('uploads', exist_ok=True) → membuat folder uploads jika belum ada.
-
-f.save('uploads/uploaded_file.txt') → menyimpan file yang diupload dengan nama tetap uploaded_file.txt.
-
-📌 Kelebihan: sangat sederhana, cocok belajar awal.
-📌 Kekurangan: nama file tidak sesuai upload user (selalu overwrite).
-
-
-
-
-## 🔹 Kode Kedua (Aman)
-
-from flask import Flask, request 
+🔹 Kode Kedua (Versi Lebih Aman)
 import os
+from flask import Flask, request 
+from werkzeug.utils import secure_filename
 
-app = Flask(__name__)           
+app = Flask(__name__)
 
-@app.route('/upload', methods=['GET', 'POST'])     
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        print(request.files)
-        print(request.files['the_file'].filename)
-        os.makedirs('uploads', exist_ok=True)  
+        if 'the_file' not in request.files:
+            return 'no file apart'
+        
+        file = request.files['the_file']
+        if file.filename == '':
+            return 'no file selected'
 
-        f = request.files['the_file']
-        f.save('uploads/uploaded_file.txt')
-
-        return 'file uploaded successfully'
-
+        filename = secure_filename(file.filename) 
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        return f'file upload sukses: {filename}'
+        
     return '''
     <form method="POST" enctype="multipart/form-data"><br>
     <input type="file" name="the_file"><br>
-    <input type="submit" value="upload"><br>
+    <input type="submit" value="uploads"><br>
     </form>
     '''
 
 if __name__ == '__main__':
     app.run(debug=True)
+===========================================================================================================
+🛠 Fungsi Utama
 
-🛠 Fungsi yang digunakan:
+secure_filename(file.filename) → mengamankan nama file dari karakter berbahaya.
 
-Flask(__name__) → membuat instance aplikasi Flask.
+if 'the_file' not in request.files → validasi apakah form mengandung input file.
 
-@app.route('/upload', methods=['GET','POST']) → mendefinisikan endpoint /upload yang bisa menerima GET (form) & POST (upload).
+if file.filename == '' → validasi apakah user memilih file.
 
-request.files → menampung file yang diupload user.
-
-os.makedirs('uploads', exist_ok=True) → membuat folder uploads jika belum ada.
-
-f.save('uploads/uploaded_file.txt') → menyimpan file yang diupload dengan nama tetap uploaded_file.txt.
-
-📌 Kelebihan: sangat sederhana, cocok belajar awal.
-📌 Kekurangan: nama file tidak sesuai upload user (selalu overwrite).
-
-
+file.save(os.path.join(UPLOAD_FOLDER, filename)) → menyimpan file dengan nama asli (yang sudah diamankan).
+===========================================================================================================
+``` bash
+pip install flask
+```
+``` bash
+python upload_basic.py     # kode pertama
+python upload_secure.py    # kode kedua
+```
+``` bash
+http://127.0.0.1:5000/upload
+```
