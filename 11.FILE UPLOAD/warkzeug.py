@@ -13,7 +13,6 @@ UPLOAD_FOLDER = 'uploads'
 os.makedirs('uploads', exist_ok=True)
 
 @app.route('/upload', methods=['GET', 'POST']) # rute ini upload ini mrmbuat dalam bentuk get dan post untuk proses upload
-
 def upload_file():
     if request.method == 'POST':
         if 'the_file' not in request.files:
