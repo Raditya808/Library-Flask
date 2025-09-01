@@ -10,7 +10,7 @@ def valid_login(username, password):
 def log_the_user_in(username):
     return f'Logged in as {username}'
 
-@app.route('/')
+@app.route('/',methods=['GET','POST'])
 def login():
     error = None
     if request.method == 'POST':
