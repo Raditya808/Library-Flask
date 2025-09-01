@@ -9,7 +9,7 @@
     {% if error %}
     <p style="color :red;">{{ error }}</p>
     {% endif %}
-    <form action ="login.html" method ="post">
+    <form action ="{{url_for('login') }}" method="post">
         <label for ="username">Username</label>
         <input type="text" name="username" id="username" required>
         <br>
@@ -21,3 +21,25 @@
     </form>
 </body>
 </html>
+<!-- fungsi kode  -->
+
+<!-- 1. action="{{ url_for('login') }}"
+
+url_for('login') adalah fungsi Flask yang dipanggil di dalam template Jinja2.
+
+Ia akan mencari route yang terhubung dengan fungsi bernama login di Python.
+Contoh:
+---------------------------------------
+@app.route('/', methods=['GET', 'POST'])
+def login():
+---------------------------------------
+
+2. method="post"
+
+Menentukan metode HTTP yang dipakai untuk mengirim data form.
+
+Dengan post, data dikirim secara tersembunyi di dalam body request → bisa diakses di Flask lewat request.form.
+
+Lebih aman dibanding get, karena kalau pakai get datanya akan muncul di URL (/?username=...&password=...).
+
+-->
